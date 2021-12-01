@@ -7,4 +7,4 @@
 
 | Day | Puzzle                                                          | Solution                             |
 | --: | :-------------------------------------------------------------- | :----------------------------------- |
-|   1 | [title](https://adventofcode.com/2021/day/1)                    | [aoc2021_day01.py](aoc2021_day01.py) |
+|   1 | [Sonar Sweep](https://adventofcode.com/2021/day/1)              | [aoc2021_day01.py](aoc2021_day01.py) |
