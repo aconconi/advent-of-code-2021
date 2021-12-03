@@ -8,3 +8,5 @@
 | Day | Puzzle                                                          | Solution                             |
 | --: | :-------------------------------------------------------------- | :----------------------------------- |
 |   1 | [Sonar Sweep](https://adventofcode.com/2021/day/1)              | [aoc2021_day01.py](aoc2021_day01.py) |
+|   2 | [Dive!](https://adventofcode.com/2021/day/2)                    | [aoc2021_day02.py](aoc2021_day02.py) |
+|   3 | [Binary Diagnostic](https://adventofcode.com/2021/day/3)        | [aoc2021_day03.py](aoc2021_day03.py) |
