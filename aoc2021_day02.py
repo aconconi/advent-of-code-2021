@@ -42,7 +42,6 @@ def test_day02():
 
 
 if __name__ == "__main__":
-    # Read input file into lines
     with open("data/day02.txt", "r", encoding="ascii") as data_file:
         lines = data_file.readlines()
         input_data = []
@@ -60,4 +59,4 @@ if __name__ == "__main__":
     print(
         "What do you get if you multiply your final horizontal position by your final depth?"
     )
-    print(day02_part02(input_data))  # Correct answer is
+    print(day02_part02(input_data))  # Correct answer is 1620141160
