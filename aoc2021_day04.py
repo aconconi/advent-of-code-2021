@@ -89,5 +89,7 @@ if __name__ == "__main__":
     print(day04_part01(bingo))  # Correct answer is 58412
 
     # Part 2
-    print("Figure out which board will win last. Once it wins, what would its final score be?")
+    print(
+        "Figure out which board will win last. Once it wins, what would its final score be?"
+    )
     print(day04_part02(bingo))  # Correct answer is 10030

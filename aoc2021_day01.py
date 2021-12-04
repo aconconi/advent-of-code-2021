@@ -3,6 +3,8 @@
     Day 01: Sonar Sweep
 """
 
+import pytest
+
 
 def day01_part01(data):
     return sum(current > prev for prev, current in zip(data, data[1:]))
@@ -13,9 +15,16 @@ def day01_part02(data):
     return day01_part01(triads)
 
 
-def test_day01():
-    test_data = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
+@pytest.fixture(autouse=True)
+def test_data():
+    return (199, 200, 208, 210, 200, 207, 240, 269, 260, 263)
+
+
+def test_day01_part1(test_data):
     assert day01_part01(test_data) == 7
+
+
+def test_day01_part2(test_data):
     assert day01_part02(test_data) == 5
 
 
