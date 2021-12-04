@@ -3,6 +3,8 @@
     Day 02: Dive!
 """
 
+import pytest
+
 
 def day02_part01(data):
     hpos = 0
@@ -28,8 +30,9 @@ def day02_part02(data):
     return hpos * depth
 
 
-def test_day02():
-    test_data = [
+@pytest.fixture(autouse=True)
+def test_data():
+    return [
         ("forward", 5),
         ("down", 5),
         ("forward", 8),
@@ -37,7 +40,13 @@ def test_day02():
         ("down", 8),
         ("forward", 2),
     ]
+
+
+def test_day02_part1(test_data):
     assert day02_part01(test_data) == 150
+
+
+def test_day02_part2(test_data):
     assert day02_part02(test_data) == 900
 
 
