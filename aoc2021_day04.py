@@ -3,73 +3,98 @@
     Day 04: Giant Squid
 """
 
-import copy
+import pytest
 
 
-def is_winning_board(board):
-    if any(row == [None, None, None, None, None] for row in board) or any(
-        all(row[i] == None for row in board) for i in range(len(board[0]))
-    ):
-        return sum(sum(x for x in row if x is not None) for row in board)
-    return False
+class Board:
+    def __init__(self, lst):
+        self.rows = [[int(x) for x in row] for row in lst]
+        self.num_cols = len(lst[0])
+
+    def cross_out(self, n):
+        for row in self.rows:
+            for i, _ in enumerate(row):
+                if row[i] == n:
+                    row[i] = None
+                    return True
+        return False
+
+    def is_winning(self):
+        has_winning_row = any(all(x is None for x in row) for row in self.rows)
+        has_winning_col = any(
+            all(row[i] is None for row in self.rows) for i in range(self.num_cols)
+        )
+        return has_winning_row or has_winning_col
+
+    def score(self):
+        return sum(sum(x for x in row if x is not None) for row in self.rows)
 
 
-def win_score_gen(draw, input_boards):
-    boards = copy.deepcopy(input_boards)
-    winners = set()
-    for n in draw:
-        if len(winners) == len(boards):
-            return
-        for b_idx, board in enumerate(boards):
-            if b_idx in winners:
-                continue
-            for row in board:
-                for i, _ in enumerate(row):
-                    if row[i] == n:
-                        row[i] = None
-                        break
-            s = is_winning_board(board)
-            if s != False:
-                winners.add(b_idx)
-                yield s * n
+class Game:
+    def __init__(self, draw_data, boards_data):
+        self.boards = [Board(b) for b in boards_data]
+        self.num_boards = len(self.boards)
+        self.draw = [int(x) for x in draw_data]
 
-
-def day04_part01(draw, boards):
-    return next(win_score_gen(draw, boards))
-
-
-def day04_part02(draw, boards):
-    return list(win_score_gen(draw, boards))[-1]
-
-
-def test_day04():
-    draw, boards = parse_input("data/day04_test.txt")
-    assert day04_part01(draw, boards) == 188 * 24  # 4512
-    assert day04_part02(draw, boards) == 148 * 13  # 1924
+    def win_score_gen(self):
+        winners = set()
+        for n in self.draw:
+            if len(winners) == self.num_boards:
+                return
+            for b_idx, board in enumerate(self.boards):
+                if b_idx in winners:
+                    continue
+                if board.cross_out(n) and board.is_winning():
+                    winners.add(b_idx)
+                    yield board.score() * n
 
 
 def parse_input(file_name):
     with open(file_name, "r", encoding="ascii") as data_file:
         lines = data_file.read().splitlines()
-    draw = [int(x) for x in lines.pop(0).split(",")]
-    boards = []
-    for line in lines:
+    draw_data = lines[0].split(",")
+    boards_data = []
+    for line in lines[1:]:
         if line == "":
-            boards.append([])
+            boards_data.append([])
         else:
-            boards[-1].append([int(x) for x in line.split()])
-    return draw, boards
+            boards_data[-1].append(line.split())
+    return draw_data, boards_data
+
+
+def day04_part01(game):
+    return next(game.win_score_gen())
+
+
+def day04_part02(game):
+    return list(game.win_score_gen())[-1]
+
+
+
+@pytest.fixture(autouse=True)
+def fixture_game():
+    # Setup tests from puzzle description
+    draw_data, boards_data = parse_input("data/day04_test.txt")
+    return Game(draw_data, boards_data)
+
+
+def test_day04_part01(fixture_game):
+    assert day04_part01(fixture_game) == 188 * 24  # 4512
+
+
+def test_day04_part02(fixture_game):
+    assert day04_part02(fixture_game) == 148 * 13  # 1924
 
 
 if __name__ == "__main__":
-    draw, boards = parse_input("data/day04.txt")
+    bingo = Game(*parse_input("data/day04.txt"))
 
     # Part 1
     print("What will your final score be if you choose that board?")
-    print(day04_part01(draw, boards))  # Correct answer is 58412
+    print(day04_part01(bingo))  # Correct answer is 58412
 
     # Part 2
     print(
         "Figure out which board will win last. Once it wins, what would its final score be?"
     )
-    print(day04_part02(draw, boards))  # Correct answer is
+    print(day04_part02(bingo))  # Correct answer is 10030
