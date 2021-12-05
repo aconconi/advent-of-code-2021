@@ -6,55 +6,43 @@
 import pytest
 
 
-class Board:
-    def __init__(self, lst):
-        self.rows = [[int(x) for x in row] for row in lst]
-        self.num_cols = len(lst[0])
-
-    def cross_out(self, n):
-        for row in self.rows:
-            for i, _ in enumerate(row):
-                if row[i] == n:
-                    row[i] = None
-                    return True
-        return False
-
-    def is_winner(self):
-        has_winning_row = any(all(x is None for x in row) for row in self.rows)
-        has_winning_col = any(
-            all(row[i] is None for row in self.rows) for i in range(self.num_cols)
-        )
-        return has_winning_row or has_winning_col
-
-    def score(self):
-        return sum(sum(x for x in row if x is not None) for row in self.rows)
+def is_winner(board, seen):
+    num_cols = len(board[0])
+    has_winning_row = any(all(x in seen for x in row) for row in board)
+    has_winning_col = any(all(row[i] in seen for row in board) for i in range(num_cols))
+    return has_winning_row or has_winning_col
 
 
-def win_score_gen(draw_data, boards_data):
-    boards = [Board(b) for b in boards_data]
+def score(board, seen):
+    return sum(sum(set(row) - seen) for row in board)
+
+
+def win_score_gen(draw_data, boards):
+    draw = list(reversed(draw_data))
     num_boards = len(boards)
-    draw = [int(x) for x in reversed(draw_data)]
     winners = set()
+    seen = set()
     while draw and len(winners) < num_boards:
         n = draw.pop()
+        seen.add(n)
         for b_idx, board in enumerate(boards):
             if b_idx in winners:
                 continue
-            if board.cross_out(n) and board.is_winner():
+            if is_winner(board, seen):
                 winners.add(b_idx)
-                yield board.score() * n
+                yield score(board, seen) * n
 
 
 def parse_input(file_name):
     with open(file_name, "r", encoding="ascii") as data_file:
         lines = data_file.read().splitlines()
-    draw_data = lines[0].split(",")
+    draw_data = tuple(int(x) for x in lines[0].split(","))
     boards_data = []
     for line in lines[1:]:
         if line == "":
             boards_data.append([])
         else:
-            boards_data[-1].append(line.split())
+            boards_data[-1].append([int(x) for x in line.split()])
     return draw_data, boards_data
 
 
