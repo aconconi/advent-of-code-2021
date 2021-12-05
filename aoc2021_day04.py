@@ -66,19 +66,19 @@ def day04_part02(score_gen):
     return list(score_gen)[-1]
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True, name="score_gen")
 def fixture_score_gen():
     # Setup tests from puzzle description
     draw_data, boards_data = parse_input("data/day04_test.txt")
     return win_score_gen(draw_data, boards_data)
 
 
-def test_day04_part01(fixture_score_gen):
-    assert day04_part01(fixture_score_gen) == 188 * 24  # 4512
+def test_day04_part01(score_gen):
+    assert day04_part01(score_gen) == 188 * 24  # 4512
 
 
-def test_day04_part02(fixture_score_gen):
-    assert day04_part02(fixture_score_gen) == 148 * 13  # 1924
+def test_day04_part02(score_gen):
+    assert day04_part02(score_gen) == 148 * 13  # 1924
 
 
 if __name__ == "__main__":

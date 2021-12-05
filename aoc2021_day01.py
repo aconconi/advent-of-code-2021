@@ -15,8 +15,8 @@ def day01_part02(data):
     return day01_part01(triads)
 
 
-@pytest.fixture(autouse=True)
-def test_data():
+@pytest.fixture(autouse=True, name="test_data")
+def fixture_test_data():
     return (199, 200, 208, 210, 200, 207, 240, 269, 260, 263)
 
 

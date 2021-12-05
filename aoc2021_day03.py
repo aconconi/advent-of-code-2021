@@ -35,8 +35,8 @@ def day03_part02(data):
     return solve_set(data, operator.ge) * solve_set(data, operator.lt)
 
 
-@pytest.fixture
-def test_data():
+@pytest.fixture(name="test_data")
+def fixture_test_data():
     return ["00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000", "11001", "00010", "01010"]
 
 
