@@ -30,8 +30,8 @@ def day02_part02(data):
     return hpos * depth
 
 
-@pytest.fixture(autouse=True)
-def test_data():
+@pytest.fixture(name="test_data")
+def fixture_test_data():
     return [
         ("forward", 5),
         ("down", 5),
@@ -55,8 +55,8 @@ if __name__ == "__main__":
         lines = data_file.readlines()
         input_data = []
         for line in lines:
-            cmd, val = line.split()
-            input_data.append((cmd, int(val)))
+            command, value = line.split()
+            input_data.append((command, int(value)))
 
     # Part 1
     print(
