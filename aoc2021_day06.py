@@ -13,24 +13,15 @@ def parse_input(file_name):
         return [int(x) for x in z.split(",")]
 
 
-def smart_add(a, x):
-    if x is None:
-        return a
-    elif a is None:
-        return x
-    else:
-        return a + x
-
-
 def solve(data, days):
-    c = [None] * 9
+    c = [0] * 9
     for x in data:
-        c[x] = smart_add(c[x], 1)
+        c[x] += 1
     c = deque(c)
     for _ in range(days):
         c.rotate(-1)
-        c[6] = smart_add(c[6], c[8])
-    return sum(x for x in c if x is not None)
+        c[6] += c[8]
+    return sum(c)
 
 
 def day06_part01(data):
