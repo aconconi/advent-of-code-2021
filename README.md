@@ -12,3 +12,4 @@
 |   3 | [Binary Diagnostic](https://adventofcode.com/2021/day/3)        | [aoc2021_day03.py](aoc2021_day03.py) |
 |   4 | [Giant Squid](https://adventofcode.com/2021/day/4)              | [aoc2021_day04.py](aoc2021_day04.py) |
 |   5 | [Hydrothermal Venture](https://adventofcode.com/2021/day/5)     | [aoc2021_day05.py](aoc2021_day05.py) |
+|   6 | [Lanternfish](https://adventofcode.com/2021/day/6)              | [aoc2021_day06.py](aoc2021_day06.py) |
