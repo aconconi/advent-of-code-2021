@@ -24,11 +24,11 @@ def day07_part02(data):
         return n * (n + 1) // 2
 
     avg = mean(data)
-    avg_f, avg_c = floor(avg), ceil(avg)
+    avg_floor, avg_ceil = floor(avg), ceil(avg)
     return min(
         [
-            sum(gauss_sum(abs(x - avg_f)) for x in data),
-            sum(gauss_sum(abs(x - avg_c)) for x in data),
+            sum(gauss_sum(abs(x - avg_floor)) for x in data),
+            sum(gauss_sum(abs(x - avg_ceil)) for x in data),
         ]
     )
 
