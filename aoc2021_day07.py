@@ -3,9 +3,10 @@
     Day 07: The Treachery of Whales
 """
 
+from math import ceil, floor
+from statistics import mean, median
 
 import pytest
-from statistics import median, mean
 
 
 def parse_input(file_name):
@@ -22,8 +23,14 @@ def day07_part02(data):
     def gauss_sum(n):
         return n * (n + 1) // 2
 
-    avg = round(mean(data))
-    return sum(gauss_sum(abs(x - avg)) for x in data)
+    avg = mean(data)
+    avg_f, avg_c = floor(avg), ceil(avg)
+    return min(
+        [
+            sum(gauss_sum(abs(x - avg_f)) for x in data),
+            sum(gauss_sum(abs(x - avg_c)) for x in data),
+        ]
+    )
 
 
 @pytest.fixture(autouse=True, name="test_data")
