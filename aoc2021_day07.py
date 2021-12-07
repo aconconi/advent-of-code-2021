@@ -5,7 +5,7 @@
 
 
 import pytest
-from statistics import median
+from statistics import median, mean
 
 
 def parse_input(file_name):
@@ -22,10 +22,8 @@ def day07_part02(data):
     def gauss_sum(n):
         return n * (n + 1) // 2
 
-    def fuel(pos):
-        return sum(gauss_sum(abs(x - pos)) for x in data)
-
-    return min(fuel(pos) for pos in range(len(data)))
+    avg = round(mean(data))
+    return sum(gauss_sum(abs(x - avg)) for x in data)
 
 
 @pytest.fixture(autouse=True, name="test_data")
