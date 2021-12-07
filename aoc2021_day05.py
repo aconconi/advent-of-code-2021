@@ -3,9 +3,10 @@
     Day 05: Hydrothermal Venture
 """
 
+import re
 from collections import Counter
 from dataclasses import dataclass
-import re
+
 import pytest
 
 
