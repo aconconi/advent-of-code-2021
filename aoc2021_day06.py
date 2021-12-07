@@ -9,7 +9,7 @@ import pytest
 
 def parse_input(file_name):
     with open(file_name, "r", encoding="ascii") as data_file:
-        z = data_file.readlines()[0]
+        z = data_file.read()
         return [int(x) for x in z.split(",")]
 
 
