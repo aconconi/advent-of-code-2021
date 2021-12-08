@@ -52,6 +52,7 @@ def solve(pattern):
 
 
 def day08_part02(data):
+    # Brute forcing on segments (arguably the worst approach, there are smarter way to solve this!)
     total = 0
     for pattern, outval in data:
         trans = str.maketrans(solve(pattern), LETTERS)
