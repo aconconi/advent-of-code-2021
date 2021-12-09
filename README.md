@@ -14,3 +14,5 @@
 |   5 | [Hydrothermal Venture](https://adventofcode.com/2021/day/5)     | [aoc2021_day05.py](aoc2021_day05.py) |
 |   6 | [Lanternfish](https://adventofcode.com/2021/day/6)              | [aoc2021_day06.py](aoc2021_day06.py) |
 |   7 | [The Treachery of Whales](https://adventofcode.com/2021/day/7)  | [aoc2021_day07.py](aoc2021_day07.py) |
+|   8 | [Seven Segment Search](https://adventofcode.com/2021/day/8)     | [aoc2021_day07.py](aoc2021_day08.py) |
+|   9 | [Smoke Basin](https://adventofcode.com/2021/day/9)              | [aoc2021_day07.py](aoc2021_day09.py) |
