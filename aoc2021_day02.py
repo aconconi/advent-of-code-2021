@@ -8,11 +8,11 @@ import pytest
 
 def parse_input(file_name):
     with open(file_name, "r", encoding="ascii") as data_file:
-        input_data = []
+        data = []
         for line in data_file.readlines():
             command, value = line.split()
             input_data.append((command, int(value)))
-        return input_data
+        return data
 
 
 def day02_part01(data):
