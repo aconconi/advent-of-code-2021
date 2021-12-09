@@ -6,6 +6,11 @@
 import pytest
 
 
+def parse_input(file_name):
+    with open(file_name, "r", encoding="ascii") as data_file:
+        return [int(x) for x in data_file.readlines()]
+
+
 def day01_part01(data):
     return sum(current > prev for prev, current in zip(data, data[1:]))
 
@@ -17,7 +22,7 @@ def day01_part02(data):
 
 @pytest.fixture(autouse=True, name="test_data")
 def fixture_test_data():
-    return (199, 200, 208, 210, 200, 207, 240, 269, 260, 263)
+    return parse_input("data/day01_test.txt")
 
 
 def test_day01_part1(test_data):
@@ -29,15 +34,10 @@ def test_day01_part2(test_data):
 
 
 if __name__ == "__main__":
-    # Read input file into lines
-    with open("data/day01.txt", "r", encoding="ascii") as data_file:
-        lines = data_file.readlines()
-        input_data = [int(x) for x in lines]
+    input_data = parse_input("data/day01.txt")
 
-    # Part 1
-    print("How many measurements are larger than the previous measurement?")
+    print("Day 01 Part 1:")
     print(day01_part01(input_data))  # Correct answer is 1446
 
-    # Part 2
-    print("How many sums are larger than the previous sum?")
+    print("Day 01 Part 2:")
     print(day01_part02(input_data))  # Correct answer is 1486
