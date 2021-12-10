@@ -3,19 +3,16 @@
     Day 08: Seven Segment Search
 """
 
+from collections import Counter
 from itertools import permutations
 
 import pytest
 
 
+DIGITS = "abcefg cf acdeg acdfg bcdf abdfg abdefg acf abcdefg abcdfg"
 LETTERS = "abcdefg"
 UNIQUE_LENGHTS = [2, 3, 4, 7]
-RENDER = {
-    s: str(i)
-    for i, s in enumerate(
-        "abcefg cf acdeg acdfg bcdf abdfg abdefg acf abcdefg abcdfg".split()
-    )
-}
+RENDER = {s: str(i) for i, s in enumerate(DIGITS.split())}
 
 
 def parse_input(file_name):
@@ -24,40 +21,46 @@ def parse_input(file_name):
         data = []
         for line in lines:
             pattern, out_val = line.split("|")
-            pattern = ["".join(sorted(x)) for x in pattern.split()]
-            out_val = ["".join(sorted(x)) for x in out_val.split()]
-            data.append((pattern, out_val))
+            data.append((pattern.split(), out_val.split()))
         return data
 
 
 def day08_part01(data):
-    return sum(
-        sum(len(v) in UNIQUE_LENGHTS for v in outval)
-        for _, outval in data
-    )
+    return sum(sum(len(v) in UNIQUE_LENGHTS for v in outval) for _, outval in data)
 
 
-def is_solution(pattern, perm):
-    trans = str.maketrans(perm, LETTERS)
-    a = set("".join(sorted(c.translate(trans))) for c in pattern)
-    return a == set(RENDER.keys())
+def day08_part02_brute_force(data):
+    # Brute force testing 2^7 permutations: not the most efficient approach
 
+    def decode(s, trans):
+        return "".join(sorted(s.translate(trans)))
 
-def solve(pattern):
-    return next(
-        "".join(perm)
-        for perm in permutations(LETTERS)
-        if is_solution(pattern, "".join(perm))
-    )
+    total = 0
+    for pattern, outval in data:
+        for perm in permutations(LETTERS):
+            trans = str.maketrans("".join(perm), LETTERS)
+            decoded_pattern = [decode(p, trans) for p in pattern]
+            if all(x in RENDER.keys() for x in decoded_pattern):
+                decoded_outval = "".join(RENDER[decode(v, trans)] for v in outval)
+                total += int(decoded_outval)
+    return total
 
 
 def day08_part02(data):
-    # Brute forcing on segments (arguably the worst approach, there are smarter way to solve this!)
+    # More efficient approach: cracking the code with frequency analysis
+
+    # Find frequencies of segments in clear representation
+    c = Counter(DIGITS.replace(" ", ""))
+    freq = {
+        tuple(sorted(c[x] for x in digit)): str(i)
+        for i, digit in enumerate(DIGITS.split())
+    }
+
+    # Decode each output value analyzing segment frequencies in signals pattern
     total = 0
     for pattern, outval in data:
-        trans = str.maketrans(solve(pattern), LETTERS)
-        decode = "".join(RENDER["".join(sorted(v.translate(trans)))] for v in outval)
-        total += int(decode)
+        c = Counter("".join(pattern))
+        total += int("".join(freq[tuple(sorted(c[x] for x in v))] for v in outval))
     return total
 
 
@@ -77,10 +80,8 @@ def test_day08_part02(test_data):
 if __name__ == "__main__":
     input_data = parse_input("data/day08.txt")
 
-    # Part 1
     print("Day 08 Part 1:")
     print(day08_part01(input_data))  # Correct answer is 532
 
-    # Part 2
     print("Day 08 Part 2:")
     print(day08_part02(input_data))  # Correct answer is 1011284
