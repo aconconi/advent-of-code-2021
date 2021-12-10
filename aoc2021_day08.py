@@ -25,11 +25,11 @@ def parse_input(file_name):
         return data
 
 
-def day08_part01(data):
+def day08_part1(data):
     return sum(sum(len(v) in UNIQUE_LENGHTS for v in outval) for _, outval in data)
 
 
-def day08_part02_brute_force(data):
+def day08_part2_brute_force(data):
     # Brute force testing 2^7 permutations: not the most efficient approach
 
     def decode(s, trans):
@@ -46,7 +46,7 @@ def day08_part02_brute_force(data):
     return total
 
 
-def day08_part02(data):
+def day08_part2(data):
     # More efficient approach: cracking the code with frequency analysis
 
     # Find frequencies of segments in clear representation
@@ -69,19 +69,19 @@ def fixture_test_data():
     return parse_input("data/day08_test.txt")
 
 
-def test_day08_part01(test_data):
-    assert day08_part01(test_data) == 26
+def test_day08_part1(test_data):
+    assert day08_part1(test_data) == 26
 
 
-def test_day08_part02(test_data):
-    assert day08_part02(test_data) == 61229
+def test_day08_part2(test_data):
+    assert day08_part2(test_data) == 61229
 
 
 if __name__ == "__main__":
     input_data = parse_input("data/day08.txt")
 
     print("Day 08 Part 1:")
-    print(day08_part01(input_data))  # Correct answer is 532
+    print(day08_part1(input_data))  # Correct answer is 532
 
     print("Day 08 Part 2:")
-    print(day08_part02(input_data))  # Correct answer is 1011284
+    print(day08_part2(input_data))  # Correct answer is 1011284

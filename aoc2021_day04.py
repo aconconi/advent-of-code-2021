@@ -46,11 +46,11 @@ def parse_input(file_name):
     return draw_data, boards_data
 
 
-def day04_part01(score_gen):
+def day04_part1(score_gen):
     return next(score_gen)
 
 
-def day04_part02(score_gen):
+def day04_part2(score_gen):
     return list(score_gen)[-1]
 
 
@@ -61,23 +61,19 @@ def fixture_score_gen():
     return win_score_gen(draw_data, boards_data)
 
 
-def test_day04_part01(score_gen):
-    assert day04_part01(score_gen) == 188 * 24  # 4512
+def test_day04_part1(score_gen):
+    assert day04_part1(score_gen) == 188 * 24  # 4512
 
 
-def test_day04_part02(score_gen):
-    assert day04_part02(score_gen) == 148 * 13  # 1924
+def test_day04_part2(score_gen):
+    assert day04_part2(score_gen) == 148 * 13  # 1924
 
 
 if __name__ == "__main__":
     bingo = win_score_gen(*parse_input("data/day04.txt"))
 
-    # Part 1
-    print("What will your final score be if you choose that board?")
-    print(day04_part01(bingo))  # Correct answer is 58412
+    print("Day 04 Part 1:")
+    print(day04_part1(bingo))  # Correct answer is 58412
 
-    # Part 2
-    print(
-        "Figure out which board will win last. Once it wins, what would its final score be?"
-    )
-    print(day04_part02(bingo))  # Correct answer is 10030
+    print("Day 04 Part 2:")
+    print(day04_part2(bingo))  # Correct answer is 10030

@@ -15,7 +15,7 @@ def parse_input(file_name):
         return data
 
 
-def day02_part01(data):
+def day02_part1(data):
     hpos = 0
     depth = 0
     for cmd, val in data:
@@ -26,7 +26,7 @@ def day02_part01(data):
     return hpos * depth
 
 
-def day02_part02(data):
+def day02_part2(data):
     hpos = 0
     depth = 0
     aim = 0
@@ -45,18 +45,18 @@ def fixture_test_data():
 
 
 def test_day02_part1(test_data):
-    assert day02_part01(test_data) == 150
+    assert day02_part1(test_data) == 150
 
 
 def test_day02_part2(test_data):
-    assert day02_part02(test_data) == 900
+    assert day02_part2(test_data) == 900
 
 
 if __name__ == "__main__":
     input_data = parse_input("data/day02.txt")
 
     print("Day 02 Part 1:")
-    print(day02_part01(input_data))  # Correct answer is 1451208
+    print(day02_part1(input_data))  # Correct answer is 1451208
 
     print("Day 02 Part 2:")
-    print(day02_part02(input_data))  # Correct answer is 1620141160
+    print(day02_part2(input_data))  # Correct answer is 1620141160

@@ -25,11 +25,11 @@ def solve(data, days):
     return sum(c)
 
 
-def day06_part01(data):
+def day06_part1(data):
     return solve(data, 80)
 
 
-def day06_part02(data):
+def day06_part2(data):
     return solve(data, 256)
 
 
@@ -38,21 +38,19 @@ def fixture_test_data():
     return parse_input("data/day06_test.txt")
 
 
-def test_day06_part01(test_data):
-    assert day06_part01(test_data) == 5934
+def test_day06_part1(test_data):
+    assert day06_part1(test_data) == 5934
 
 
-def test_day06_part02(test_data):
-    assert day06_part02(test_data) == 26984457539
+def test_day06_part2(test_data):
+    assert day06_part2(test_data) == 26984457539
 
 
 if __name__ == "__main__":
     input_data = parse_input("data/day06.txt")
 
-    # Part 1
     print("Day 06 Part 1:")
-    print(day06_part01(input_data))  # Correct answer is 362639
+    print(day06_part1(input_data))  # Correct answer is 362639
 
-    # Part 2
     print("Day 06 Part 2:")
-    print(day06_part02(input_data))  # Correct answer is 1639854996917
+    print(day06_part2(input_data))  # Correct answer is 1639854996917

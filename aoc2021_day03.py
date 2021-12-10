@@ -13,7 +13,7 @@ def parse_input(file_name):
         return data_file.read().splitlines()
 
 
-def day03_part01(data):
+def day03_part1(data):
     ones = [0] * len(data[0])
     for digits in data:
         for i, d in enumerate(digits):
@@ -37,7 +37,7 @@ def solve_set(data, comparison_op):
     return None
 
 
-def day03_part02(data):
+def day03_part2(data):
     return solve_set(data, operator.ge) * solve_set(data, operator.lt)
 
 
@@ -47,18 +47,18 @@ def fixture_test_data():
 
 
 def test_day03_part1(test_data):
-    assert day03_part01(test_data) == 198  # 22 * 9
+    assert day03_part1(test_data) == 198  # 22 * 9
 
 
 def test_day03_part2(test_data):
-    assert day03_part02(test_data) == 230  # 23 * 10
+    assert day03_part2(test_data) == 230  # 23 * 10
 
 
 if __name__ == "__main__":
     input_data = parse_input("data/day03.txt")
 
     print("Day 03 Part 1:")
-    print(day03_part01(input_data))  # Correct answer is 3895776
+    print(day03_part1(input_data))  # Correct answer is 3895776
 
     print("Day 03 Part 2:")
-    print(day03_part02(input_data))  # Correct answer is 7928162
+    print(day03_part2(input_data))  # Correct answer is 7928162
