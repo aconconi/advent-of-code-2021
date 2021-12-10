@@ -11,7 +11,7 @@ def parse_input(file_name):
         data = []
         for line in data_file.readlines():
             command, value = line.split()
-            input_data.append((command, int(value)))
+            data.append((command, int(value)))
         return data
 
 
