@@ -8,9 +8,9 @@ from statistics import median
 
 import pytest
 
-SCORE1 = {")": 3, "]": 57, "}": 1197, ">": 25137}
-SCORE2 = {")": 1, "]": 2, "}": 3, ">": 4}
+
 MATCH = {"(": ")", "[": "]", "{": "}", "<": ">"}
+SCORE = {")": (3, 1), "]": (57, 2), "}": (1197, 3), ">": (25137, 4)}
 
 
 def parse_input(file_name):
@@ -18,28 +18,29 @@ def parse_input(file_name):
         return data_file.read().splitlines()
 
 
-def corruption_score(line):
+def corruption(line):
+    """Returns corruption score and rest of the stack"""
     stack = []
     for c in line:
         if c in MATCH:
             stack.append(c)
             continue
         if not stack or MATCH[stack.pop()] != c:
-            return SCORE1[c], stack
+            return SCORE[c][0], stack
     return 0, stack
 
 
 def day10_part01(data):
-    return sum(corruption_score(line)[0] for line in data)
+    return sum(corruption(line)[0] for line in data)
 
 
 def day10_part02(data):
     scores = []
     for line in data:
-        cs, stack = corruption_score(line)
+        cs, stack = corruption(line)
         if not cs:
             scores.append(
-                reduce(lambda s, x: s * 5 + SCORE2[MATCH[x]], reversed(stack), 0)
+                reduce(lambda s, x: s * 5 + SCORE[MATCH[x]][1], reversed(stack), 0)
             )
     return int(median(scores))
 
