@@ -14,12 +14,12 @@ def parse_input(file_name):
         return [int(x) for x in data_file.read().split(",")]
 
 
-def day07_part01(data):
+def day07_part1(data):
     med = int(median(data))
     return sum(abs(x - med) for x in data)
 
 
-def day07_part02(data):
+def day07_part2(data):
     def gauss_sum(n):
         return n * (n + 1) // 2
 
@@ -38,21 +38,19 @@ def fixture_test_data():
     return parse_input("data/day07_test.txt")
 
 
-def test_day07_part01(test_data):
-    assert day07_part01(test_data) == 37
+def test_day07_part1(test_data):
+    assert day07_part1(test_data) == 37
 
 
-def test_day07_part02(test_data):
-    assert day07_part02(test_data) == 168
+def test_day07_part2(test_data):
+    assert day07_part2(test_data) == 168
 
 
 if __name__ == "__main__":
     input_data = parse_input("data/day07.txt")
 
-    # Part 1
     print("Day 07 Part 1:")
-    print(day07_part01(input_data))  # Correct answer is 351901
+    print(day07_part1(input_data))  # Correct answer is 351901
 
-    # Part 2
     print("Day 07 Part 2:")
-    print(day07_part02(input_data))  # Correct answer is 101079875
+    print(day07_part2(input_data))  # Correct answer is 101079875

@@ -49,11 +49,11 @@ def basin_size(data, pos):
     return len(seen)
 
 
-def day09_part01(data):
+def day09_part1(data):
     return sum(int(data[i][j]) + 1 for i, j in low_points(data))
 
 
-def day09_part02(data):
+def day09_part2(data):
     sizes = sorted(
         [basin_size(data, low_point) for low_point in low_points(data)], reverse=True
     )
@@ -65,19 +65,19 @@ def fixture_test_data():
     return parse_input("data/day09_test.txt")
 
 
-def test_day09_part01(test_data):
-    assert day09_part01(test_data) == 15
+def test_day09_part1(test_data):
+    assert day09_part1(test_data) == 15
 
 
-def test_day09_part02(test_data):
-    assert day09_part02(test_data) == 1134
+def test_day09_part2(test_data):
+    assert day09_part2(test_data) == 1134
 
 
 if __name__ == "__main__":
     input_data = parse_input("data/day09.txt")
 
     print("Day 09 Part 1:")
-    print(day09_part01(input_data))  # Correct answer is 585
+    print(day09_part1(input_data))  # Correct answer is 585
 
     print("Day 09 Part 2:")
-    print(day09_part02(input_data))  # Correct answer is 827904
+    print(day09_part2(input_data))  # Correct answer is 827904

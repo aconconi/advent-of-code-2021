@@ -30,11 +30,11 @@ def corruption(line):
     return 0, stack
 
 
-def day10_part01(data):
+def day10_part1(data):
     return sum(corruption(line)[0] for line in data)
 
 
-def day10_part02(data):
+def day10_part2(data):
     scores = []
     for line in data:
         cs, stack = corruption(line)
@@ -50,19 +50,19 @@ def fixture_test_data():
     return parse_input("data/day10_test.txt")
 
 
-def test_day10_part01(test_data):
-    assert day10_part01(test_data) == 26397
+def test_day10_part1(test_data):
+    assert day10_part1(test_data) == 26397
 
 
-def test_day10_part02(test_data):
-    assert day10_part02(test_data) == 288957
+def test_day10_part2(test_data):
+    assert day10_part2(test_data) == 288957
 
 
 if __name__ == "__main__":
     input_data = parse_input("data/day10.txt")
 
     print("Day 10 Part 1:")
-    print(day10_part01(input_data))  # Correct answer is 318099
+    print(day10_part1(input_data))  # Correct answer is 318099
 
     print("Day 10 Part 2:")
-    print(day10_part02(input_data))  # Correct answer is 2389738699
+    print(day10_part2(input_data))  # Correct answer is 2389738699
