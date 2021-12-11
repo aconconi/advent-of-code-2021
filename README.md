@@ -17,3 +17,4 @@
 |   8 | [Seven Segment Search](https://adventofcode.com/2021/day/8)     | [aoc2021_day08.py](aoc2021_day08.py) |
 |   9 | [Smoke Basin](https://adventofcode.com/2021/day/9)              | [aoc2021_day09.py](aoc2021_day09.py) |
 |  10 | [Syntax Scoring](https://adventofcode.com/2021/day/10)          | [aoc2021_day10.py](aoc2021_day10.py) |
+|  11 | [Dumbo Octopus](https://adventofcode.com/2021/day/11)           | [aoc2021_day11.py](aoc2021_day11.py) |
