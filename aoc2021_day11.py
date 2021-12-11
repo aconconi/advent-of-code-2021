@@ -22,13 +22,15 @@ def build_grid(data):
 
 def neighbors(pos):
     i, j = pos
-    for dr, dc in DELTA:
-        if 0 <= i + dr < 10 and 0 <= j + dc < 10:
-            yield (i + dr, j + dc)
+    for di, dj in DELTA:
+        if 0 <= i + di < 10 and 0 <= j + dj < 10:
+            yield (i + di, j + dj)
 
 
 def tick(grid):
     """Evolves grid and returns number of flashes occurred during this step."""
+
+    flashes = 0
 
     # First, the energy level of each octopus increases by 1.
     charged = set()
@@ -37,23 +39,18 @@ def tick(grid):
         if grid[p] > 9:
             charged.add(p)
 
-    # Then, any octopus with an energy level greater than 9 flashes.
-    flashed = set()
+    # Then, any octopus with energy level greater than 9
+    # flashes and triggers a chain reaction.
     while charged:
         p = charged.pop()
-        flashed.add(p)
-        for p2 in neighbors(p):
-            if p2 in flashed:
-                continue
+        flashes += 1
+        grid[p] = 0
+        for p2 in filter(lambda x: grid[x] > 0, neighbors(p)):
             grid[p2] += 1
             if grid[p2] > 9:
                 charged.add(p2)
 
-    # Any octopus that flashed during this step has its energy level set to 0.
-    for p in flashed:
-        grid[p] = 0
-
-    return len(flashed)
+    return flashes
 
 
 def day11_part01(data):
