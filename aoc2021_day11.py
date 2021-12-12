@@ -53,12 +53,12 @@ def tick(grid):
     return flashes
 
 
-def day11_part01(data):
+def day11_part1(data):
     grid = build_grid(data)
     return sum(tick(grid) for _ in range(100))
 
 
-def day11_part02(data):
+def day11_part2(data):
     grid = build_grid(data)
     return next(step for step in count(1) if tick(grid) == 100)
 
@@ -68,19 +68,19 @@ def fixture_test_data():
     return parse_input("data/day11_test.txt")
 
 
-def test_day11_part01(test_data):
-    assert day11_part01(test_data) == 1656
+def test_day11_part1(test_data):
+    assert day11_part1(test_data) == 1656
 
 
-def test_day11_part02(test_data):
-    assert day11_part02(test_data) == 195
+def test_day11_part2(test_data):
+    assert day11_part2(test_data) == 195
 
 
 if __name__ == "__main__":
     input_data = parse_input("data/day11.txt")
 
     print("Day 11 Part 1:")
-    print(day11_part01(input_data))  # Correct answer is 1757
+    print(day11_part1(input_data))  # Correct answer is 1757
 
     print("Day 11 Part 2:")
-    print(day11_part02(input_data))  # Correct answer is 422
+    print(day11_part2(input_data))  # Correct answer is 422
