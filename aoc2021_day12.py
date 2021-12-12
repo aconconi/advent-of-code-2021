@@ -18,22 +18,7 @@ def parse_input(file_name):
         return graph
 
 
-def day12_part1(graph):
-    num_paths = 0
-    stack = [["start"]]
-    while stack:
-        path = stack.pop()
-        if path[-1] == "end":
-            num_paths += 1
-            continue
-        for neigh in graph[path[-1]]:
-            if neigh not in path or neigh.isupper():
-                stack.append(path + [neigh])
-
-    return num_paths
-
-
-def day12_part2(graph):
+def count_paths(graph, allow_single_small_twice=False):
     num_paths = 0
     stack = [(["start"], False)]
     while stack:
@@ -44,10 +29,22 @@ def day12_part2(graph):
         for neigh in graph[path[-1]]:
             if neigh not in path or neigh.isupper():
                 stack.append((path + [neigh], twice))
-            elif neigh.islower() and neigh not in ["start", "end"] and not twice:
+            elif (
+                allow_single_small_twice
+                and not twice
+                and neigh.islower()
+                and neigh not in ["start", "end"]
+            ):
                 stack.append((path + [neigh], True))
-
     return num_paths
+
+
+def day12_part1(graph):
+    return count_paths(graph)
+
+
+def day12_part2(graph):
+    return count_paths(graph, allow_single_small_twice=True)
 
 
 @pytest.fixture(autouse=True, name="test_data")
