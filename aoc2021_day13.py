@@ -64,7 +64,7 @@ def test_day13_part1(test_data):
     assert day13_part1(test_data) == 17
 
 
-def test_day13_pytepart2(test_data):
+def test_day13_part2(test_data):
     assert day13_part2(test_data) == "#####\n#...#\n#...#\n#...#\n#####"
 
 
