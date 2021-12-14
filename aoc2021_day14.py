@@ -16,7 +16,7 @@ def parse_input(file_name):
 
 
 def solve(template, rules, num_steps):
-    # count initial pairs 
+    # count initial pairs
     current_count = Counter(zip(template, template[1:]))
 
     for _ in range(num_steps):
@@ -24,7 +24,7 @@ def solve(template, rules, num_steps):
         new_count = defaultdict(int)
         for pair in current_count:
             if pair in rules:
-                # if there is a rule AB->X, then AB pairs
+                # if there is a rule AB -> X, then AB pairs
                 # generate new AX and XB pairs and disappear
                 a, b = pair
                 new_count[a, rules[pair]] += current_count[pair]
