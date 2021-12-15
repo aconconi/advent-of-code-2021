@@ -17,8 +17,8 @@ class RiskGrid:
     def __init__(self, data, repeat=1):
         self.height = len(data)
         self.width = len(data[0])
-        self.height_repeated = len(data) * repeat
-        self.width_repeated = len(data[0]) * repeat
+        self.height_repeated = self.height * repeat
+        self.width_repeated = self.width * repeat
         self.grid = {
             (i, j): int(data[i][j])
             for i in range(self.height)
@@ -34,9 +34,9 @@ class RiskGrid:
 
     def cost(self, pos):
         x, y = pos
-        gx, gy = x % self.width, y % self.height
-        inc = x // self.width + y // self.height
-        return (self.grid[gx, gy] - 1 + inc) % 9 + 1
+        inc_x, gx = divmod(x, self.width)
+        inc_y, gy = divmod(y, self.height)
+        return (self.grid[gx, gy] - 1 + inc_x + inc_y) % 9 + 1
 
     def find_shortest_path(self):
         source = (0, 0)
