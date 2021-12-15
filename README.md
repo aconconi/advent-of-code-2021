@@ -21,3 +21,4 @@
 |  12 | [Passage Pathing](https://adventofcode.com/2021/day/12)         | [aoc2021_day12.py](aoc2021_day12.py) |
 |  13 | [Transparent Origami](https://adventofcode.com/2021/day/13)     | [aoc2021_day13.py](aoc2021_day13.py) |
 |  14 | [Extended Polymerization](https://adventofcode.com/2021/day/14) | [aoc2021_day14.py](aoc2021_day14.py) |
+|  15 | [Chiton](https://adventofcode.com/2021/day/15)                  | [aoc2021_day15.py](aoc2021_day15.py) |
