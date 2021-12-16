@@ -15,29 +15,31 @@ def hex_to_bits(hexdata):
     return "".join(format(byte, "08b") for byte in bytes.fromhex(hexdata))
 
 
-class Bits:
-    def __init__(self, hexdata):
-        self.sequence = hex_to_bits(hexdata)
+class BitsTransmission:
+    def __init__(self, bits):
+        self.bits = bits
         self.pos = 0
 
     def read_bits(self, n):
-        ans = self.sequence[self.pos : self.pos + n]
+        ans = self.bits[self.pos : self.pos + n]
         self.pos += n
         return ans
 
     def read_int(self, n):
         return int(self.read_bits(n), 2)
 
-    def read_packet(self):
-        version = self.read_int(3)
-        typeID = self.read_int(3)
-        payload = self.read_payload(typeID)
-        return (version, typeID, payload)
 
-    def read_payload(self, typeID):
+class PacketParser:
+    def __init__(self, bits):
+        self.version = bits.read_int(3)
+        self.typeID = bits.read_int(3)
+        self.payload = self.read_payload(bits, self.typeID)
+
+    @staticmethod
+    def read_payload(bits, typeID):
         # Packets with type ID 4 represent a literal value.
         if typeID == 4:
-            return self.read_literal()
+            return PacketParser.read_literal(bits)
 
         # Every other type of packet (any packet with a
         # type ID other than 4) represent an operator.
@@ -45,56 +47,61 @@ class Bits:
         # If the length type ID is 1, then the next 11 bits
         # are a number that represents the number of sub-packets
         # immediately contained by this packet.
-        if self.read_bits(1) == "1":
-            return [self.read_packet() for _ in range(self.read_int(11))]
+        if bits.read_bits(1) == "1":
+            return [PacketParser(bits) for _ in range(bits.read_int(11))]
 
         # If the length type ID is 0, then the next 15 bits are a number
         # that represents the total length in bits of the sub-packets
         # contained by this packet.
-        return self.read_subpackets_by_len(self.read_int(15))
+        size = bits.read_int(15)
+        return PacketParser.read_subpackets_by_len(bits, size)
 
-    def read_literal(self):
+    @staticmethod
+    def read_literal(bits):
         literal = ""
-        while chunk := self.read_bits(5):
+        while chunk := bits.read_bits(5):
             literal += chunk[1:]
             if chunk[0] == "0":
                 break
         return int(literal, 2)
 
-    def read_subpackets_by_len(self, size):
-        end_pos = self.pos + size
+    @staticmethod
+    def read_subpackets_by_len(bits, size):
+        end_pos = bits.pos + size
         packets = []
-        while self.pos < end_pos:
-            packets.append(self.read_packet())
+        while bits.pos < end_pos:
+            packets.append(PacketParser(bits))
         return packets
 
+    def sum_versions(self):
+        return (
+            self.version
+            if self.typeID == 4
+            else self.version + sum(p.sum_versions() for p in self.payload)
+        )
 
-def sum_versions(packet):
-    version, typeID, payload = packet
-    return version if typeID == 4 else version + sum(sum_versions(p) for p in payload)
-
-
-def eval_tree(packet):
-    func = {
-        0: sum,
-        1: prod,
-        2: min,
-        3: max,
-        4: lambda x: x[0],
-        5: lambda x: x[0] > x[1],
-        6: lambda x: x[0] < x[1],
-        7: lambda x: x[0] == x[1],
-    }
-    _, typeID, payload = packet
-    return func[typeID]([payload] if typeID == 4 else [eval_tree(p) for p in payload])
+    def evaluate(self):
+        func = {
+            0: sum,
+            1: prod,
+            2: min,
+            3: max,
+            4: lambda x: x[0],
+            5: lambda x: x[0] > x[1],
+            6: lambda x: x[0] < x[1],
+            7: lambda x: x[0] == x[1]
+        }
+        return func[self.typeID](
+            [self.payload] if self.typeID == 4 else [p.evaluate() for p in self.payload]
+        )
 
 
 def day16_part1(data):
-    return sum_versions(Bits(data).read_packet())
+    return PacketParser(BitsTransmission(hex_to_bits(data))).sum_versions()
 
 
 def day16_part2(data):
-    return eval_tree(Bits(data).read_packet())
+    return PacketParser(BitsTransmission(hex_to_bits(data))).evaluate()
 
 
 def test_day16_part1():
