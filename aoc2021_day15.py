@@ -60,7 +60,7 @@ class RiskGrid:
                             queue, (distance + self.cost(neigh), neigh, path)
                         )
         # queue empty, no path found
-        return []
+        return None, None
 
 
 def day15_part1(data):
