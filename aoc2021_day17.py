@@ -19,32 +19,25 @@ def parse_target_line(line):
     return [int(a) for a in findall(r"-?\d+", line)]
 
 
-def fire(vx, vy, target):
-    x1, x2, y1, y2 = target
-    x, y = 0, 0
-    max_y = 0
-    while  x <= x2 and (vy > 0 or y >= y1) and (vx > 0 or x >= x1):
-        x += vx
-        y += vy
-        vx -= vx // abs(vx) if vx else 0
-        vy -= 1
-        max_y = max(max_y, y)
-        if x1 <= x <= x2 and y1 <= y <= y2:
-            return max_y
-    return None
-
-
 def day17_part1(target):
     _, _, y1, y2 = target
     return comb(abs(min(y1, y2)), 2)
 
 
 def day17_part2(target):
-    _, x2, y1, _ = target
-    return sum(
-        fire(vx, vy, target) is not None
-        for vx, vy in product(range(x2 + 1), range(y1, x2 + 1))
-    )
+    x1, x2, y1, y2 = target
+    count = 0
+    for vx, vy in product(range(x2 + 1), range(y1, x2 + 1)):
+        x, y = 0, 0
+        while x <= x2 and (vy > 0 or y >= y1) and (vx > 0 or x >= x1):
+            x += vx
+            y += vy
+            vx -= vx // abs(vx) if vx else 0
+            vy -= 1
+            if x1 <= x <= x2 and y1 <= y <= y2:
+                count += 1
+                break
+    return count
 
 
 @pytest.fixture(autouse=True, name="test_data")
