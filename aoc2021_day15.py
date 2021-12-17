@@ -42,35 +42,29 @@ class RiskGrid:
         source = (0, 0)
         destination = self.width_repeated - 1, self.height_repeated - 1
 
-        # Dijkstra's shortest path algorithm.
-        # Note we're keeping track of paths for debug purposes,
-        # though we're only interested in total distance.
+        # Dijkstra shortest path algorithm with priority queue.
         visited = set()
-        queue = [(0, source, ())]
+        queue = [(0, source)]
         while queue:
-            distance, pos, path = heapq.heappop(queue)
-            if pos not in visited:
-                visited.add(pos)
-                path = path + (pos,)
-                if pos == destination:
-                    return distance, path
-                for neigh in self.neighbors(pos):
-                    if neigh not in visited:
-                        heapq.heappush(
-                            queue, (distance + self.cost(neigh), neigh, path)
-                        )
+            distance, pos = heapq.heappop(queue)
+            if pos == destination:
+                return distance
+            if pos in visited:
+                continue
+            visited.add(pos)
+            for neigh in self.neighbors(pos):
+                if neigh not in visited:
+                    heapq.heappush(queue, (distance + self.cost(neigh), neigh))
         # queue empty, no path found
-        return None, None
+        return None
 
 
 def day15_part1(data):
-    risk, _ = RiskGrid(data).find_shortest_path()
-    return risk
+    return RiskGrid(data).find_shortest_path()
 
 
 def day15_part2(data):
-    risk, _ = RiskGrid(data, repeat=5).find_shortest_path()
-    return risk
+    return RiskGrid(data, repeat=5).find_shortest_path()
 
 
 @pytest.fixture(autouse=True, name="test_data")
